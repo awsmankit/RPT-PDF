@@ -21,7 +21,7 @@ HTTPS uses SSL (Secure Socket Layer) or TLS (Transport Layer Security) to encryp
 
 **6. What is AJAX? How it is used with and without jQuery?**
 
-AJAX (Asynchronous JavaScript and XML) is a technique used for updating a web page without reloading the entire page. It allows the user to interact with the web application without any page refresh. 
+AJAX (Asynchronous JavaScript and XML) is a technique used for updating a web page without reloading the entire page. It allows the user to interact with the web application without any page refresh.
 AJAX can be used with or without jQuery. With jQuery, AJAX can be implemented using the $.ajax() method, while without jQuery, AJAX can be implemented using the XMLHttpRequest object.
 
 **7. What is DOM? Explain in context of HTML page.**
@@ -95,8 +95,7 @@ JSX is a syntax extension for JavaScript that allows developers to write HTML-li
 
 To loop inside JSX, you can use the map function on an array and return a new array of JSX elements. For example:
 
-````javascript
-
+```javascript
 const myArray = ["apple", "banana", "cherry"];
 
 const myJSX = (
@@ -106,7 +105,7 @@ const myJSX = (
     ))}
   </ul>
 );
-````
+```
 
 This code will loop through the myArray array, and for each item in the array, it will return a new JSX element that contains the item as text. The resulting myJSX variable will contain a JSX element that renders an unordered list with three list items, one for each item in the array.
 
@@ -124,22 +123,22 @@ The reason why you can't update props in React is that React follows a one-way d
 
 In HTML, event handling is done using inline event handlers or by adding event listeners to the DOM element. For example, you can add an onclick attribute to an HTML button element to handle the click event:
 
-````javascript
+```javascript
 <button onclick="handleClick()">Click me</button>
-````
+```
+
 In React, event handling is done by passing a callback function to the onClick (or other event) prop of a React component. For example, to handle the click event of a button in React, you would define a handler function and pass it to the button component as a prop:
 
-````javascript
+```javascript
 function handleClick() {
-  console.log('Button clicked');
+  console.log("Button clicked");
 }
 
 function App() {
-  return (
-    <button onClick={handleClick}>Click me</button>
-  );
+  return <button onClick={handleClick}>Click me</button>;
 }
-````
+```
+
 The main difference is that in React, event handling is done using JavaScript rather than inline HTML attributes, which allows for more flexibility and better separation of concerns.
 
 **What is Virtual DOM? How it works?**
@@ -159,7 +158,6 @@ A class component is a JavaScript class that extends the React.Component class. 
 A functional component is a JavaScript function that returns a React element. It is simpler to write and easier to understand than class components. Functional components are used when you just need to render data and don't need access to state or lifecycle methods.
 
 A Pure Component is a type of React component that is optimized to prevent unnecessary re-renders. It is similar to a regular component, but it implements shouldComponentUpdate() method with a shallow comparison of current and next props and state. Pure components are used when you need to improve performance by avoiding unnecessary re-renders.
-
 
 **18. What are the lifecycle methods of React?**
 
@@ -193,23 +191,52 @@ These lifecycle methods can be used to control the behavior of React components 
 
 **19. What are Higher-Order components?**
 
-Higher-Order components (HOCs) are functions that take a component as input and return a new component with enhanced functionality. HOCs allow you to reuse code and share functionality between multiple components. Some examples of HOCs include:
+Higher-order components (HOCs) are functions that take a component as input and return a new component that wraps the original component. In other words, an HOC is a function that enhances the functionality of a component by adding new features, such as state management or data fetching.
 
-WithAuth: a HOC that adds authentication capabilities to a component
+HOCs are a popular pattern in React for code reuse and separation of concerns. They allow developers to extract common functionality from multiple components and reuse it across the application. HOCs can also help to keep components simple and focused on a single responsibility.
 
-WithLogging: a HOC that logs component lifecycle events
+For example, an HOC could be used to add authentication logic to a component. The HOC would handle the authentication logic, and the original component would only need to render the content based on the authentication status.
 
-WithRouter: a HOC that adds routing capabilities to a component
+Here's an example of an HOC in React:
+
+```java
+
+function withData(WrappedComponent) {
+  return class extends React.Component {
+    state = {
+      data: []
+    }
+
+    componentDidMount() {
+      // fetch data from an API and set it to state
+      fetch('https://example.com/api/data')
+        .then(response => response.json())
+        .then(data => this.setState({ data }));
+    }
+
+    render() {
+      // render the original component with the data passed as props
+      return <WrappedComponent data={this.state.data} {...this.props} />;
+    }
+  };
+}
+
+// create a component and wrap it with the HOC
+const MyComponentWithData = withData(MyComponent);
+
+```
+
+In this example, the withData HOC adds data fetching logic to a component. The MyComponentWithData component is created by passing MyComponent to the withData function. The MyComponentWithData component has access to the fetched data as a prop, which can be used to render the component.
 
 **20. What are render props?**
 
 Render props is a pattern in React where a component receives a function as a prop that it can use to render its content. The function is typically called with some data or state from the component, and the returned JSX is used to render the component's content. Render props allow for more flexible and reusable components, and are often used in conjunction with other patterns like HOCs and context.
 
-**21. What is React Router?** 
+**21. What is React Router?**
 
 React Router is a library for managing routing in a React application. It allows you to define routes and map them to specific components, and provides features like URL parameters, nested routes, and programmatic navigation. React Router is commonly used in single-page applications and other applications where the URL should reflect the current state of the application.
 
-**22. How to perform automatic redirect after login in React?** 
+**22. How to perform automatic redirect after login in React?**
 
 One way to perform automatic redirect after login in React is to use the Redirect component from React Router. After a successful login, you can set a flag in the component's state to indicate that the user is authenticated, and conditionally render a Redirect component to the desired route.
 
@@ -254,20 +281,18 @@ Delete: DELETE request that removes a record from the database
 
 To handle these operations in Express, you can define routes with the appropriate HTTP method and endpoint, and use a database library like MySQL and Mongoose to interact with the database. For example, a route to create a new user might look like this:
 
-````javascript
-
-app.post('/users', async (req, res) => {
+```javascript
+app.post("/users", async (req, res) => {
   const newUser = req.body;
   const result = await User.create(newUser);
   res.json(result);
 });
-````
-This route handles a POST request to the /users endpoint, creates a new user in the database using the User model, and sends back the result as JSON.
+```
 
+This route handles a POST request to the /users endpoint, creates a new user in the database using the User model, and sends back the result as JSON.
 
 **28. What is event loop in Node JS? Why Node JS is single-threaded?**
 
 The event loop is a key feature of Node.js that allows for asynchronous I/O and non-blocking operations. It is a loop that constantly checks for new events to process, and executes them one at a time. Each event is processed in a separate turn of the loop, and callbacks are used to signal when an operation is complete. The event loop is single-threaded, meaning that all events are processed on a single thread of execution, but it is highly efficient and can handle many concurrent requests.
 
 Node.js is single-threaded because it was designed to optimize for scalability and performance in server-side applications. By using asynchronous I/O and non-blocking operations, Node.js can handle many concurrent connections and requests without blocking the main thread of execution. This allows for highly scalable and performant applications, especially in cases where I/O operations are a bottleneck. However, it also means that Node.js is not well-suited for CPU-bound tasks, as these can block the event loop and reduce overall performance.
-
